@@ -1,0 +1,213 @@
+SLIP-1 
+
+Q1> Write a Java Program to implement I/O Decorator for converting uppercase letters to 
+
+lower case letters. 
+
+=> 
+
+import java.io.*; 
+
+import java.util.*; 
+
+class LowerCaseInputStream extends FilterInputStream 
+
+{ 
+
+public LowerCaseInputStream(InputStream in) { 
+
+super(in); 
+
+} 
+
+public int read() throws IOException { 
+
+int c = super.read(); 
+
+return (c == -1 ? c : Character.toLowerCase((char)c)); 
+
+} 
+
+public int read(byte[] b, int offset, int len) throws IOException { 
+
+int result = super.read(b, offset, len); 
+
+for (int i = offset; i < offset+result; i++) { 
+
+b[i] = (byte)Character.toLowerCase((char)b[i]); 
+
+} 
+
+return result; 
+
+} 
+
+} 
+
+public class Main { 
+
+public static void main(String[] args) throws IOException { 
+
+int c; 
+
+try { 
+
+InputStream in = 
+
+new LowerCaseInputStream( 
+
+new BufferedInputStream( 
+
+new FileInputStream("test.txt"))); 
+
+while((c = in.read()) >= 0) { 
+
+System.out.print((char)c); 
+
+} 
+
+in.close(); 
+
+} catch (IOException e) { 
+
+e.printStackTrace(); 
+
+} 
+
+} 
+
+} 
+
+ 
+
+Q2> Write a Python program to prepare Scatter Plot for Iris Dataset 
+
+ 
+
+=>  
+
+import numpy as np 
+
+import pandas as pd 
+
+import matplotlib.pyplot as plt 
+
+  
+
+data=pd.read_csv("iris.csv") 
+
+print(data) 
+
+  
+
+x=data["SepalLengthCm"] 
+
+y=data["SepalWidthCm"] 
+
+print(x) 
+
+print(y) 
+
+  
+
+plt.scatter(x,y,c="red") 
+
+plt.title("IRIS CSV") 
+
+plt.xlabel("SepalLengthCm") 
+
+plt.ylabel("SepalWidthCm") 
+
+plt.show() 
+
+ 
+
+Import Libraries: pip install numpy  
+
+     pip install pandas  
+
+     pip install matplotlib 
+
+ 
+
+ 
+
+Q3> Create an HTML form that contain the Student Registration details and write a JavaScript to validate Student first and last name as it should not contain other than alphabets and age should be between 18 to 50. 
+
+=>  
+
+<html> 
+
+<head> 
+
+<title> 
+
+Registration Form 
+
+</title> 
+
+<script> 
+
+function f() 
+
+{ 
+
+var fname=document.myform.fname.value; 
+
+var lname=document.myform.lname.value; 
+
+var age=document.myform.age.value; 
+
+if(!(/[a-zA-Z]+/).test(fname)) 
+
+{ 
+
+alert("please enter valid first name"); 
+
+return false; 
+
+} 
+
+if(!(/[a-zA-Z]+/).test(lname)) 
+
+{ 
+
+alert("please enter valid last name"); 
+
+return false; 
+
+} 
+
+if(isNaN(age)||age<18||age>60) 
+
+{ 
+
+alert("please enter age between 18 to 60"); 
+
+return false; 
+
+} 
+
+} 
+
+</script> 
+
+</head> 
+
+<body> 
+
+<form name="myform" onsubmit="f()"> 
+
+fname<input type="text" name="fname"><br><br> 
+
+lname<input type="text" name="lname"><br><br> 
+
+age<input type="text" name="age" ><br><br> 
+
+<input type="submit" value="submit"> 
+
+</form> 
+
+</body> 
+
+</html> 
