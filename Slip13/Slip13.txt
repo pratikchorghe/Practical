@@ -1,0 +1,190 @@
+Q1>Write a Java Program to implement an Adapter design pattern in mobile charger.
+Define two classes – Volt (to measure volts) and Socket (producing constant volts of
+120V). Build an adapter that can produce 3 volts, 12 volts and default 120 volts.
+Implements Adapter pattern using Class Adapter?
+=>
+class Volt { 
+ private int volts; 
+ public Volt(int v) { this.volts=v; } 
+ public int getVolts() { return volts; } 
+ public void setVolts(int volts) { this.volts = volts; } 
+} 
+ class Socket { 
+ public Volt getVolt(){ return new Volt(120); } 
+} 
+ interface SocketAdapter { 
+ public Volt get120Volt(); 
+ public Volt get12Volt(); 
+ public Volt get3Volt(); 
+} 
+ class SocketClassAdapterImpl extends Socket implements SocketAdapter { 
+ @Override 
+ public Volt get120Volt() { 
+ return getVolt(); 
+ } 
+ @Override 
+ public Volt get12Volt() { 
+ Volt v = getVolt(); 
+ return convertVolt(v,10); 
+ } 
+ @Override 
+ public Volt get3Volt() { 
+ Volt v = getVolt(); 
+ return convertVolt(v,40); 
+ } 
+ private Volt convertVolt(Volt v, int i) { 
+ return new Volt(v.getVolts()/i); 
+ } 
+} 
+ class SocketObjectAdapterImpl implements SocketAdapter { 
+ // using composition for adapter pattern 
+ private Socket sock = new Socket(); 
+ @Override 
+ public Volt get120Volt() { 
+ return sock.getVolt(); 
+ } 
+ @Override 
+ public Volt get12Volt() { 
+ Volt v = sock.getVolt(); 
+ return convertVolt(v,10); 
+ } 
+ @Override 
+ public Volt get3Volt() { 
+ Volt v = sock.getVolt(); 
+ return convertVolt(v,40); 
+ } 
+ private Volt convertVolt(Volt v, int i) { 
+ return new Volt(v.getVolts()/i); 
+ } 
+} 
+
+public class Main { 
+ public static void main(String[] args) { 
+ testClassAdapter(); 
+ testObjectAdapter(); 
+ } 
+ 
+ private static void testObjectAdapter() { 
+ SocketAdapter sockAdapter = new SocketObjectAdapterImpl(); 
+ Volt v3 = getVolt(sockAdapter,3); 
+ Volt v12 = getVolt(sockAdapter,12); 
+ Volt v120 = getVolt(sockAdapter,120); 
+ System.out.println("v3 volts using Object Adapter="+v3.getVolts()); 
+ System.out.println("v12 volts using Object Adapter="+v12.getVolts()); 
+ System.out.println("v120 volts using Object Adapter="+v120.getVolts()); 
+ } 
+ 
+ private static void testClassAdapter() { 
+ SocketAdapter sockAdapter = new SocketClassAdapterImpl(); 
+ Volt v3 = getVolt(sockAdapter,3); 
+ Volt v12 = getVolt(sockAdapter,12); 
+ Volt v120 = getVolt(sockAdapter,120); 
+ System.out.println("v3 volts using Class Adapter="+v3.getVolts()); 
+ System.out.println("v12 volts using Class Adapter="+v12.getVolts()); 
+ System.out.println("v120 volts using Class Adapter="+v120.getVolts()); 
+ } 
+ 
+ private static Volt getVolt(SocketAdapter sockAdapter, int i) { 
+ switch (i){ 
+ case 3: return sockAdapter.get3Volt(); 
+ case 12: return sockAdapter.get12Volt(); 
+ case 120: return sockAdapter.get120Volt(); 
+ default: return sockAdapter.get120Volt(); 
+ } 
+ } 
+} 
+
+Q2>Write a Python program to prepare Scatter Plot for Iris Dataset?
+=>
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data=pd.read_csv("iris.csv")
+print(data)
+
+x=data["SepalLengthCm"]
+y=data["SepalWidthCm"]
+print(x)
+print(y)
+
+plt.scatter(x,y,c="red")
+plt.title("IRIS CSV")
+plt.xlabel("SepalLengthCm")
+plt.ylabel("SepalWidthCm")
+plt.show()
+
+Q3>Using node js create a User Login System?
+=>
+Index.html 
+<!DOCTYPE html> 
+<html lang = "en"> 
+<head> 
+    <meta charset = "UTF-8"> 
+    <title> My Form </title> 
+    <style>         #mylink{             font-size: 25px; 
+        } 
+    </style> 
+</head> 
+<body align='center'> 
+        <header> 
+        <h1>Login</h1> 
+    </header> 
+ 
+    <form action="/login" method="POST"> 
+        <fieldset> 
+                 
+            <label>Email ID</label> 
+            <input type ="email" id = 'email' name="email" placeholder="abc@example.com" required> 
+            <br><br> 
+ 
+            <label>Password</label> 
+            <input type="password" id = "password" name="password" required> 
+            <br><br> 
+ 
+            <button type ="reset">Reset</button> 
+            <button type ="submit">Submit</button> 
+        </fieldset> 
+        </form> 
+        <br><br> 
+        <a id="mylink" href="./registration.html">register</a> 
+ 
+</body> 
+</html> 
+
+File.js 
+
+const express = require('express'); const http = require('http'); const bcrypt = require('bcrypt'); const path = require("path"); const bodyParser = require('body-parser'); const users = require('./data').userDB; 
+ const app = express(); const server = http.createServer(app); 
+ app.use(bodyParser.urlencoded({extended: false})); app.use(express.static(path.join(__dirname,'./'))); 
+ 
+app.get('/',(req,res) => {     res.sendFile(path.join(__dirname,'./index.html')); });  
+app.post('/register', async (req, res) => {     try{         let foundUser = users.find((data) => req.body.email === data.email);         if (!foundUser) { 
+                 let hashPassword = await bcrypt.hash(req.body.password, 10); 
+                 let newUser = {                 id: Date.now(),                 username: req.body.username,                 email: req.body.email,                 password: hashPassword, 
+            }; 
+            users.push(newUser); 
+            console.log('User list', users); 
+                 res.send("<div align ='center'>
+                 <h2>Registration successful</h2></div><br><br><div align='center'><a href='./login.html'>login</a></div><br><br><div align='center'><a href='./registration.html'>Register another user</a></div>"); 
+        } else { 
+            res.send("<div align ='center'><h2>Email already used</h2></div><br><br><div align='center'><a 
+href='./registration.html'>Register again</a></div>"); 
+        }     } catch{ 
+        res.send("Internal server error"); 
+    } 
+});  app.post('/login', async (req, res) => {     try{         let foundUser = users.find((data) => req.body.email === data.email);         if (foundUser) { 
+                 let submittedPass = req.body.password;              let storedPass = foundUser.password;  
+                 const passwordMatch = await bcrypt.compare(submittedPass, storedPass);             if (passwordMatch) {                 let usrname = foundUser.username;                 res.send(`<div align ='center'><h2>login successful</h2></div><br><br><br><div align ='center'><h3>Hello 
+${usrname}</h3></div><br><br><div align='center'><a href='./login.html'>logout</a></div>`); 
+            } else {                 res.send("<div align ='center'><h2>Invalid email or password</h2></div><br><br><div align ='center'><a href='./login.html'>login again</a></div>"); 
+            }         }         else { 
+                 let fakePass = `$2b$$10$ifgfgfgfgfgfgfggfgfgfggggfgfgfga`;             await bcrypt.compare(req.body.password, fakePass); 
+                 res.send("<div align ='center'><h2>Invalid email or password</h2></div><br><br><div align='center'><a href='./login.html'>login again<a><div>"); 
+        }     } catch{ 
+        res.send("Internal server error"); 
+    } 
+});  
+server.listen(3000, function(){     console.log("server is listening on port: 3000"); 
+}); 
+
