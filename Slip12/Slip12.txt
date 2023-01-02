@@ -1,0 +1,83 @@
+Q1>Write a Java Program to implement Decorator Pattern for interface Car to define the
+assemble() method and then decorate it to Sports car and Luxury Car?
+=>
+interface Car { 
+public void assemble(); 
+} 
+ class BasicCar implements Car { 
+ @Override 
+public void assemble() { 
+System.out.print("Basic Car."); 
+} 
+} 
+
+ class CarDecorator implements Car { 
+protected Car car; 
+public CarDecorator(Car c){ 
+this.car=c; 
+} 
+@Override 
+public void assemble() { 
+this.car.assemble(); 
+} 
+} 
+class SportsCar extends CarDecorator { 
+public SportsCar(Car c) { 
+super(c); 
+} 
+@Override 
+public void assemble(){ 
+car.assemble(); 
+System.out.print(" Adding features of Sports Car."); 
+} 
+} 
+
+class LuxuryCar extends CarDecorator { 
+public LuxuryCar(Car c) { 
+super(c); 
+} 
+public void assemble(){ 
+car.assemble(); 
+System.out.print(" Adding features of Luxury Car."); 
+} 
+} 
+public class Main { 
+public static void main(String[] args) { 
+Car s1 = new SportsCar(new BasicCar()); 
+s1.assemble(); 
+Car s2 = new LuxuryCar(new BasicCar()); 
+s2.assemble(); 
+} 
+} 
+
+Q2>Write a python program to make Categorical values in numeric format for a given
+dataset?
+=>
+import pandas as pd
+import numpy as np
+
+data=pd.read_csv("ass3_data.csv")
+print(data)
+
+x=data.iloc[:,0:1].values
+print(x)
+
+from sklearn.preprocessing import LabelEncoder
+le=LabelEncoder()
+x1=le.fit_transform(x)
+print(x1)
+
+from sklearn.preprocessing import OneHotEncoder
+ohe=OneHotEncoder()
+xn=ohe.fit_transform(x).toarray()
+print(xn)
+
+Q3>Create a Simple Web Server using node js
+=>
+var http = require('http'); // 1 - Import Node.js core module
+var server = http.createServer(function (req, res) { // 2 -
+creating server
+//handle incomming requests here..
+});
+server.listen(5001); //3 - listen for any incoming requests
+console.log('Node.js web server at port 5000 is running..')
