@@ -1,0 +1,305 @@
+Q1>Write a Java Program to implement undo command to test Ceiling fan.
+=>
+Command.java
+interface Command {
+        public void execute();
+        public void undo();
+}
+
+NoCommand.java
+class NoCommand implements Command {
+        public void execute() { }
+        public void undo() { }
+}
+
+CeilingFan.java
+class CeilingFan {
+        public static final int HIGH = 3;
+        public static final int MEDIUM = 2;
+        public static final int LOW = 1;
+        public static final int OFF = 0;
+        String location;
+        int speed;
+
+        public CeilingFan(String location) {
+                this.location = location;
+                speed = OFF;
+        }
+
+        public void high() {
+                speed = HIGH;
+                System.out.println(location + " ceiling fan is on high");
+        }
+
+        public void medium() {
+                speed = MEDIUM;
+                System.out.println(location + " ceiling fan is on medium");
+        }
+
+        public void low() {
+                speed = LOW;
+                System.out.println(location + " ceiling fan is on low");
+        }
+
+        public void off() {
+                speed = OFF;
+                System.out.println(location + " ceiling fan is off");
+        }
+  
+        public int getSpeed() {
+                return speed;
+        }
+}
+
+CeilingFanHighCommand.java
+class CeilingFanHighCommand implements Command {
+        CeilingFan ceilingFan;
+        int prevSpeed;
+
+        public CeilingFanHighCommand(CeilingFan ceilingFan) {
+                this.ceilingFan = ceilingFan;
+        }
+ 
+        public void execute() {
+                prevSpeed = ceilingFan.getSpeed();
+                ceilingFan.high();
+        }
+ 
+        public void undo() {
+                if (prevSpeed == CeilingFan.HIGH) {
+                        ceilingFan.high();
+                } else if (prevSpeed == CeilingFan.MEDIUM) {
+                        ceilingFan.medium();
+                } else if (prevSpeed == CeilingFan.LOW) {
+                        ceilingFan.low();
+                } else if (prevSpeed == CeilingFan.OFF) {
+                        ceilingFan.off();
+                }
+        }
+}
+
+CeilingFanLowCommand.java
+class CeilingFanLowCommand implements Command {
+        CeilingFan ceilingFan;
+        int prevSpeed;
+
+        public CeilingFanLowCommand(CeilingFan ceilingFan) {
+                this.ceilingFan = ceilingFan;
+        }
+ 
+        public void execute() {
+                prevSpeed = ceilingFan.getSpeed();
+                ceilingFan.low();
+        }
+
+        public void undo() {
+                if (prevSpeed == CeilingFan.HIGH) {
+                        ceilingFan.high();
+                } else if (prevSpeed == CeilingFan.MEDIUM) {
+                        ceilingFan.medium();
+                } else if (prevSpeed == CeilingFan.LOW) {
+                        ceilingFan.low();
+                } else if (prevSpeed == CeilingFan.OFF) {
+                        ceilingFan.off();
+                }
+        }
+}
+
+CeilingFanMediumCommand.java
+class CeilingFanMediumCommand implements Command {
+        CeilingFan ceilingFan;
+        int prevSpeed;
+
+        public CeilingFanMediumCommand(CeilingFan ceilingFan) {
+                this.ceilingFan = ceilingFan;
+        }
+
+        public void execute() {
+                prevSpeed = ceilingFan.getSpeed();
+                ceilingFan.medium();
+        }
+
+        public void undo() {
+                if (prevSpeed == CeilingFan.HIGH) {
+                        ceilingFan.high();
+                } else if (prevSpeed == CeilingFan.MEDIUM) {
+                        ceilingFan.medium();
+                } else if (prevSpeed == CeilingFan.LOW) {
+                        ceilingFan.low();
+                } else if (prevSpeed == CeilingFan.OFF) {
+                        ceilingFan.off();
+                }
+        }
+}
+
+CeilingFanOffCommand.java
+class CeilingFanOffCommand implements Command {
+        CeilingFan ceilingFan;
+        int prevSpeed;
+
+        public CeilingFanOffCommand(CeilingFan ceilingFan) {
+                this.ceilingFan = ceilingFan;
+        }
+ 
+        public void execute() {
+                prevSpeed = ceilingFan.getSpeed();
+                ceilingFan.off();
+        }
+ 
+        public void undo() {
+                if (prevSpeed == CeilingFan.HIGH) {
+                        ceilingFan.high();
+                } else if (prevSpeed == CeilingFan.MEDIUM) {
+                        ceilingFan.medium();
+                } else if (prevSpeed == CeilingFan.LOW) {
+                        ceilingFan.low();
+                } else if (prevSpeed == CeilingFan.OFF) {
+                        ceilingFan.off();
+                }
+        }
+}
+
+RemoteControlWithUndo.java
+class RemoteControlWithUndo {
+        Command[] onCommands;
+        Command[] offCommands;
+        Command undoCommand;
+
+        public RemoteControlWithUndo() {
+                onCommands = new Command[7];
+                offCommands = new Command[7];
+
+                Command noCommand = new NoCommand();
+                for(int i=0;i<7;i++) {
+                        onCommands[i] = noCommand;
+                        offCommands[i] = noCommand;
+                }
+                undoCommand = noCommand;
+        }
+  
+        public void setCommand(int slot, Command onCommand, Command offCommand) {
+                onCommands[slot] = onCommand;
+                offCommands[slot] = offCommand;
+        }
+ 
+        public void onButtonWasPushed(int slot) {
+                onCommands[slot].execute();
+                undoCommand = onCommands[slot];
+        }
+ 
+        public void offButtonWasPushed(int slot) {
+                offCommands[slot].execute();
+                undoCommand = offCommands[slot];
+        }
+ 
+        public void undoButtonWasPushed() {
+                undoCommand.undo();
+        }
+	
+	  public String toString() {
+                StringBuffer stringBuff = new StringBuffer();
+                stringBuff.append("\n------ Remote Control -------\n");
+                for (int i = 0; i < onCommands.length; i++) {
+                        stringBuff.append("[slot " + i + "] " + onCommands[i].getClass().getName()
+                                + "    " + offCommands[i].getClass().getName() + "\n");
+                }
+                stringBuff.append("[undo] " + undoCommand.getClass().getName() + "\n");
+                return stringBuff.toString();
+        }
+}
+
+
+RemoteLoader.java
+class RemoteLoader {
+
+        public static void main(String[] args) {
+                RemoteControlWithUndo remoteControl = new RemoteControlWithUndo();
+
+                CeilingFan ceilingFan = new CeilingFan("Living Room");
+   
+                CeilingFanMediumCommand ceilingFanMedium = new CeilingFanMediumCommand(ceilingFan);
+                CeilingFanHighCommand ceilingFanHigh = new CeilingFanHighCommand(ceilingFan);
+                CeilingFanOffCommand ceilingFanOff = new CeilingFanOffCommand(ceilingFan);
+  
+                remoteControl.setCommand(0, ceilingFanMedium, ceilingFanOff);
+                remoteControl.setCommand(1, ceilingFanHigh, ceilingFanOff);
+   
+                remoteControl.onButtonWasPushed(0);
+                remoteControl.offButtonWasPushed(0);
+                System.out.println(remoteControl);
+                remoteControl.undoButtonWasPushed();
+  
+                remoteControl.onButtonWasPushed(1);
+                System.out.println(remoteControl);
+                remoteControl.undoButtonWasPushed();
+        }
+}
+
+
+OUTPUT:
+Living Room ceiling fan is on medium
+Living Room ceiling fan is off
+
+------ Remote Control -------
+[slot 0] CeilingFanMediumCommand    CeilingFanOffCommand
+[slot 1] CeilingFanHighCommand    CeilingFanOffCommand
+[slot 2] NoCommand    NoCommand
+[slot 3] NoCommand    NoCommand
+[slot 4] NoCommand    NoCommand
+[slot 5] NoCommand    NoCommand
+[slot 6] NoCommand    NoCommand
+[undo] CeilingFanOffCommand
+
+Living Room ceiling fan is on medium
+Living Room ceiling fan is on high
+
+------ Remote Control -------
+[slot 0] CeilingFanMediumCommand    CeilingFanOffCommand
+[slot 1] CeilingFanHighCommand    CeilingFanOffCommand
+[slot 2] NoCommand    NoCommand
+[slot 3] NoCommand    NoCommand
+[slot 4] NoCommand    NoCommand
+[slot 5] NoCommand    NoCommand
+[slot 6] NoCommand    NoCommand
+[undo] CeilingFanHighCommand
+
+Living Room ceiling fan is on medium
+
+Q2>Write a python program to implement Naive Bayes. 
+=>
+import numpy as np
+import pandas as pd
+data=pd.read_csv("user_data1.csv")
+print(data)
+x=data.iloc[:,[2,4]].values
+y=data.iloc[:,4].values
+
+from sklearn.model_selection import train_test_split
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.05)
+from sklearn.preprocessing import StandardScaler
+sc=StandardScaler()
+xtrain=sc.fit_transform(xtrain)
+xtest=sc.fit_transform(xtest)
+
+from sklearn.naive_bayes import GaussianNB
+gb=GaussianNB()
+gb.fit(xtrain,ytrain)
+ypred=gb.predict(xtest)
+print(ytest)
+print(ypred)
+from sklearn.metrics import confusion_matrix
+cm=confusion_matrix(ytest,ypred)
+print(cm)
+
+Q3>Create a Node.js file that writes an HTML form, with an upload field.
+=>
+var http = require('http');
+http.createServer(function (req, res) {
+res.writeHead(200, {'Content-Type': 'text/html'});
+res.write('<form action="fileupload" method="post"
+enctype="multipart/form-data">');
+res.write('<input type="file" name="filetoupload"><br>');
+res.write('<input type="submit">');
+res.write('</form>');
+return res.end();
+}).listen(8080);
