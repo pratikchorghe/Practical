@@ -1,0 +1,240 @@
+Q1>Write a Java Program to implement command pattern to test Remote Control?
+=>
+Command.java
+interface Command{
+public void execute();
+}
+
+Light.java
+public class Light {
+        public void on()
+        {
+            System.out.println("Light is on");
+        }
+        public void off()
+        {
+            System.out.println("Light is off");
+        }
+    }
+    class LightOnCommand implements Command
+    {
+        Light light;
+     
+        // The constructor is passed the light it
+        // is going to control.
+        public LightOnCommand(Light light)
+        {
+           this.light = light;
+        }
+        public void execute()
+        {
+           light.on();
+        }    
+}
+
+LightOffCommand.java
+public class LightOffCommand implements Command
+{
+    Light light;
+    public LightOffCommand(Light light)
+    {
+        this.light = light;
+    }
+    public void execute()
+    {
+         light.off();
+    }
+}
+
+LightOnCommand.java
+public class LightOnCommand implements Command
+{
+    Light light;
+ 
+    // The constructor is passed the light it
+    // is going to control.
+    public LightOnCommand(Light light)
+    {
+       this.light = light;
+    }
+    public void execute()
+    {
+       light.on();
+    }
+}
+
+Stereo.java
+public class Stereo {
+    public void on()
+    {
+        System.out.println("Stereo is on");
+    }
+    public void off()
+    {
+        System.out.println("Stereo is off");
+    }
+    public void setCD()
+    {
+        System.out.println("Stereo is set " +
+                           "for CD input");
+    }
+    public void setDVD()
+    {
+        System.out.println("Stereo is set"+
+                         " for DVD input");
+    }
+    public void setRadio()
+    {
+        System.out.println("Stereo is set" +
+                           " for Radio");
+    }
+    public void setVolume(int volume)
+    {
+       // code to set the volume
+       System.out.println("Stereo volume set"
+                          + " to " + volume);
+    }
+}
+
+StereoOffCommand.java
+public class StereoOffCommand implements Command
+{
+    Stereo stereo;
+    public StereoOffCommand(Stereo stereo)
+    {
+        this.stereo = stereo;
+    }
+    public void execute()
+    {
+       stereo.off();
+    }
+}
+
+StereoOnWithCDCommand.java
+public class StereoOnWithCDCommand implements Command
+{
+     Stereo stereo;
+     public StereoOnWithCDCommand(Stereo stereo)
+     {
+         this.stereo = stereo;
+     }
+     public void execute()
+     {
+         stereo.on();
+         stereo.setCD();
+         stereo.setVolume(11);
+     }
+}
+
+SimpleRemoteControl.java
+public class SimpleRemoteControl
+{
+    Command slot;  // only one button
+ 
+    public SimpleRemoteControl()
+    {
+    }
+ 
+    public void setCommand(Command command)
+    {
+        // set the command the remote will
+        // execute
+        slot = command;
+    }
+ 
+    public void buttonWasPressed()
+    {
+        slot.execute();
+    }
+}
+
+RemoteControlTest.java
+public class RemoteControlTest
+{
+    public static void main(String[] args)
+    {
+        SimpleRemoteControl remote =
+                  new SimpleRemoteControl();
+        Light light = new Light();
+        Stereo stereo = new Stereo();
+ 
+        // we can change command dynamically
+        remote.setCommand(new
+                    LightOnCommand(light));
+        remote.buttonWasPressed();
+        remote.setCommand(new
+                StereoOnWithCDCommand(stereo));
+        remote.buttonWasPressed();
+        remote.setCommand(new
+                   StereoOffCommand(stereo));
+        remote.buttonWasPressed();
+     }
+  }
+
+OUTPUT:
+Light is on
+Stereo is on
+Stereo is set for CD input
+Stereo volume set to 11
+Stereo is off 
+
+Q2>Write a python program to implement Polynomial Linear Regression for given dataset?
+=>
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+data=pd.read_csv("ass6_data.csv")
+print(data)
+
+x=data.iloc[:,1:2].values
+y=data.iloc[:,2].values
+
+print(x)
+print(y)
+
+from sklearn.model_selection import train_test_split
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.25)
+
+lr=LinearRegression()
+lr.fit(xtrain,ytrain)
+ypred=lr.predict(xtest)
+
+plt.scatter(x,y,c="red")
+plt.plot(x,lr.predict(x),c="green")
+plt.show()
+
+from sklearn.preprocessing import PolynomialFeatures
+pr=PolynomialFeatures(degree=4)
+xpoly=pr.fit_transform(x)
+poreg=LinearRegression()
+poreg.fit(xpoly,y)
+
+plt.scatter(x,y,c="red")
+plt.plot(x,poreg.predict(pr.fit_transform(x)),c="green")
+plt.show()
+
+
+print(lr.predict([[5.5]]))
+print(poreg.predict(pr.fit_transform([[5.5]])))
+
+Q3>Create a Node.js file that opens the requested file and returns the content to the client.
+If anything goes wrong, throw a 404 error?
+=>
+var http = require('http');
+var url = require('url');
+var fs = require('fs');
+http.createServer(function (req, res) {
+var q = url.parse(req.url, true);
+var filename = "." + q.pathname;
+fs.readFile(filename, function(err, data) {
+if (err) {
+res.writeHead(404, {'Content-Type': 'text/html'});
+return res.end("404 Not Found");
+}
+res.writeHead(200, {'Content-Type': 'text/html'});
+res.write(data);
+return res.end();
+});
+}).listen(8080);
