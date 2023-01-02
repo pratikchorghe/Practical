@@ -1,0 +1,102 @@
+Q1>Write a Java Program to implement Singleton pattern for multithreading
+=>
+public class Main { 
+ public static void main(String ar[]) { 
+ Test1 t = new Test1(); 
+ Test1 t2 = new Test1(); 
+ Test1 t3 = new Test1(); 
+ Thread tt = new Thread(t); 
+ Thread tt2 = new Thread(t2); 
+ Thread tt3 = new Thread(t3); 
+ Thread tt4 = new Thread(t); 
+ Thread tt5 = new Thread(t); 
+ tt.start(); 
+ tt2.start(); 
+ tt3.start(); 
+ tt4.start(); 
+ tt5.start(); 
+ } 
+} 
+final class Test1 implements Runnable { 
+ @Override 
+ public void run() { 
+ for (int i = 0; i < 5; i++) { 
+ System.out.println(Thread.currentThread().getName() + " : " + 
+Single.getInstance().hashCode()); 
+ } 
+ } 
+} 
+ 
+class Single { 
+ private final static Single sing = new Single(); 
+ private Single() { 
+ } 
+ public static Single getInstance() { 
+ return sing; 
+ } 
+ } 
+ 
+ Q2>Write a python program to find all null values in a given dataset and remove them
+ =>
+ import pandas as pd
+import numpy as np
+
+data=pd.read_csv("ass2_data.csv")
+print(data)
+
+print(data.isnull())
+
+print(data.notnull())
+
+data1=data.dropna(axis=0,how="any")
+print(data1)
+
+data["m1"]=data["m1"].replace(np.NaN,data["m1"].mean())
+data["m2"]=data["m2"].replace(np.NaN,data["m2"].mean())
+data["m3"]=data["m3"].replace(np.NaN,data["m3"].mean())
+print(data).
+
+
+Q3>Create an HTML form that contain the Employee Registration details and writea
+JavaScript to validate DOB, Joining Date, and Salary. 
+=>
+<html>
+<head>
+<title>Employee Form</title>
+<body>
+<form name="employee_form" onsubmit="f()"
+align="center">
+Name:<input type="text" id="name"/><br/>
+DOB:<input type="text" id="dob"/><br/>
+Date Of Joining:<input type="text"
+id="doj"/><br/>
+Salary:<input type="text" id="sal1"/><br/>
+Submit<input type="submit" id="submit"
+value="Submit"/><br/>
+</form>
+</body>
+<script>
+function f(){
+var
+pattern=/^(0?[1-9]|[1-2][0-9]|3[0-1])[\/](0?[1-9]|1[0-2])[\/]\d{
+4}$/;
+var
+dob=document.getElementById("dob").value;
+if(!pattern.test(dob))
+alert("Enter valid dob");
+var
+doj=document.getElementById("doj").value;
+if(!pattern.test(doj))
+alert("Enter valid doj");
+var
+sal=document.getElementById("sal1").value;
+if(isNaN(sal)||sal<18000||sal>50000)
+alert("Enter valid salary");
+else
+alert(“Submitted Successfully”);
+}
+</script>
+</head>
+</html>
+
+
