@@ -1,0 +1,138 @@
+Q1>Write a Java Program to implement Command Design Pattern for Command Interface with execute() . Use this to create variety of commands for LightOnCommand,
+LightOffCommand, GarageDoorUpCommand, StereoOnWithCDComman?
+=>
+interface Command { 
+ public void execute(); 
+} 
+class Stereo { 
+ public void On(){ 
+ System.out.println("Stereo is on"); 
+ } 
+} 
+class GarageDoor { 
+ public void Up(){ 
+ System.out.println("Garage Door is Up"); 
+ } 
+} 
+ class GarageDoorUpCommand implements Command { 
+ GarageDoor c; 
+ 
+ public GarageDoorUpCommand(GarageDoor l) { 
+ this.c = l; 
+ } 
+ 
+ public void execute() { 
+ c.Up(); 
+ } 
+ 
+} 
+class Light { 
+ public void on(){ 
+ System.out.println("Light is on"); 
+ } 
+ public void off() 
+ { 
+ System.out.println("Light is off"); 
+ } 
+} 
+ class LightOnCommand implements Command { 
+ Light light; 
+ 
+ public LightOnCommand(Light light) { 
+this.light = light; 
+ } 
+ 
+ public void execute() { 
+ light.on(); 
+ } 
+ 
+} 
+ class LightOffCommand implements Command { 
+Light light; 
+public LightOffCommand(Light light) { 
+this.light = light; 
+} 
+public void execute() { 
+light.off(); 
+} 
+} 
+
+class StereoOn implements Command { 
+Stereo s; 
+public StereoOn(Stereo l) { 
+this.s = l; 
+} 
+public void execute() { 
+s.On(); 
+} 
+} 
+ class SimpleRemoteControl { 
+ Command slot; 
+ 
+ public SimpleRemoteControl() {} 
+ 
+ public void setCommand(Command command) { 
+ slot = command; 
+ } 
+ 
+ public void buttonWasPressed() { 
+ slot.execute(); 
+ }  
+}
+
+public class Main { 
+ public static void main(String[] args) { 
+SimpleRemoteControl remote = new SimpleRemoteControl(); 
+Light light = new Light(); 
+LightOnCommand lightOn = new LightOnCommand(light); 
+remote.setCommand(lightOn); 
+remote.buttonWasPressed(); 
+LightOffCommand lightOff = new LightOffCommand(light); 
+remote.setCommand(lightOff); 
+remote.buttonWasPressed(); 
+GarageDoor garageDoor = new GarageDoor(); 
+GarageDoorUpCommand garageDoorUp = new GarageDoorUpCommand(garageDoor); 
+ remote.setCommand(garageDoorUp); 
+remote.buttonWasPressed(); 
+ 
+ Stereo s1=new Stereo(); 
+ StereoOn s2 =new StereoOn(s1); 
+remote.setCommand(s2); 
+remote.buttonWasPressed(); 
+ 
+ } 
+} 
+
+Q2>Write a python program to find all null values in a given dataset and remove them?
+=>
+import pandas as pd
+import numpy as np
+
+data=pd.read_csv("ass2_data.csv")
+print(data)
+
+print(data.isnull())
+
+print(data.notnull())
+
+data1=data.dropna(axis=0,how="any")
+print(data1)
+
+data["m1"]=data["m1"].replace(np.NaN,data["m1"].mean())
+data["m2"]=data["m2"].replace(np.NaN,data["m2"].mean())
+data["m3"]=data["m3"].replace(np.NaN,data["m3"].mean())
+print(data)
+
+
+Q3>Write node js script to interact with the filesystem, and serve a web page from a file?
+=>
+var express = require('express');
+var app = express();
+var PORT = 3000;
+app.get('/', function(req, res){
+res.download('hello.txt');
+});
+app.listen(PORT, function(err){
+if (err) console.log(err);
+console.log("Server listening on PORT", PORT);
+});
