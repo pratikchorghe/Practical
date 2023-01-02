@@ -1,0 +1,97 @@
+Q1>Design simple HR Application using Spring Framework?
+=>
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>SimpleHRApplication</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>org.eclipse.jdt.core.javabuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.common.project.facet.core.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.validation.validationbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
+		<nature>org.eclipse.jem.workbench.JavaEMFNature</nature>
+		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
+		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
+	</natures>
+</projectDescription>
+
+Q2>Write a python program to implement Linear SVM?
+=>
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data=pd.read_csv("user_data1.csv")
+x=data.iloc[:,2:3].values
+y=data.iloc[:,3].values
+print(x)
+print(y)
+
+from sklearn.preprocessing import StandardScaler
+sc_x=StandardScaler()
+x=sc_x.fit_transform(x)
+
+
+from sklearn.svm import SVR
+reg=SVR()
+reg.fit(x,y)
+
+y_pred=reg.predict(np.array([[35]]))
+print(y_pred)
+
+x_grid=np.arange(min(x),max(x),0.01)
+x_grid=x_grid.reshape(len(x_grid),1)
+
+plt.scatter(x,y,c="red")
+plt.plot(x_grid,reg.predict(x_grid),c="green")
+plt.show()
+
+Q3>Create a node.js file that Select all records from the "customers" table, and display the
+result object on console.
+=>
+var mysql=require('mysql'); 
+ var
+ con=mysql.createConnection({    
+ host:"localhost",     
+ user:"root",    
+ password:"satara@123",    
+ database:"mydb" 
+});  
+con.connect(function(err){     if (err) throw err;     
+console.log("Connected!!!");     var sql="INSERT INTO 
+Student (name,address) Values ?";     var values=[ 
+        ['Pritam','Highway 71'], 
+        ['Sneha','Lowstreet 4'], 
+        ['Sid','Apple st 652'], 
+        ['Sam','Valley 345'], 
+        ['Michael','Green Greass 1'], 
+        ['Griss','One way 98'], 
+        ['Richard','Sky st 331'] 
+      ];          con.query(sql,[values],function(err,result){         if (err) throw err; 
+        console.log("Number of records inserted:" + result.affectedRows); 
+    }); 
+}); 
+    
