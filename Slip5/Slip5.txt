@@ -1,0 +1,124 @@
+Q1>Write a Java Program to implement Adapter pattern for Enumeration iterator?
+=>
+EnumerationIterator.java
+import java.util.*;
+// Enumeration interface is used to get elements from vector
+class EnumerationIterator implements Iterator {
+	Enumeration enumeration;
+
+	public EnumerationIterator(Enumeration enumeration) {
+		this.enumeration = enumeration;
+	}
+
+	public boolean hasNext() {
+		return enumeration.hasMoreElements();
+	}
+
+	public Object next() {
+		return enumeration.nextElement();
+	}
+
+	public void remove() {
+		throw new UnsupportedOperationException();
+	}
+}
+
+
+class EnumIterator {
+	public static void main (String args[]) {
+		Vector v = new Vector(Arrays.asList("JAVA","CPP","SQL","HTML"));
+		Iterator iterator = new EnumerationIterator(v.elements());
+		while (iterator.hasNext()) {
+			System.out.println(iterator.next());
+		}
+	}
+}
+
+IterEnum.java
+import java.util.*;
+public class IterEnum 
+{
+
+public static void main(String[] args)
+{
+    String[] wordArr = {"Book", "Number", "Place", "Lemon", "Apple", "Tree"};
+    Vector<String> wordList = new Vector<>(Arrays.asList (wordArr)); //directly convert array to vector
+    System.out.println("\nThe word list: \n"+wordList + "\n");
+    
+    Enumeration<String> vectorEnum = wordList.elements(); 
+    //Enumeration iterates through vector show elements one by one
+    while(vectorEnum.hasMoreElements()) 
+    { //when vector Enum has more element to get System.out.println(vectorEnum.nextElement());
+        System.out.println(vectorEnum.nextElement());
+    }
+
+    LinkedList<String> wordLinkedList = new LinkedList<>();
+    wordLinkedList.addAll(wordList); //add elements from vector to linked list add some additional items
+    wordLinkedList.add("Ball");
+    wordLinkedList.add("Mango");
+    wordLinkedList.remove("Book");
+    System.out.println("\nThe word list (LinkedList): \n" + wordLinkedList + "\n");
+
+    Iterator<String> it =wordLinkedList.iterator(); //the iterator it will point elements of the linked list
+    while(it.hasNext()) 
+    { //when vector Enum has more element to get    
+        System.out.println(it.next()); 
+    }
+}
+}
+
+Q2>Write a python program to implement Multiple Linear Regression for given dataset?
+=>
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error
+
+data=pd.read_csv("house.csv")
+print(data)
+
+x=data[["bedrooms","sqft_living"]]
+y=data.price
+
+print(x)
+print(y)
+
+
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.2)
+print(xtrain)
+print(xtest)
+print(ytrain)
+print(ytest)
+
+lr=LinearRegression()
+lr.fit(xtrain,ytrain)
+
+print(lr.intercept_)
+print(lr.coef_)
+
+print(lr.predict([[2,1000]]))
+
+
+ypred=lr.predict(xtest)
+cm=mean_absolute_error(ytest,ypred)
+print(cm)
+
+
+Q3>Using nodejs create a web page to read two file names from user and append contents
+of first file into second file?
+=>
+const fs = require('fs');
+console.log("\nFile Contents of file before append:",
+a=fs.readFileSync("file1.txt", "utf8"));
+fs.appendFile("file2.txt", a, (err) => {
+if (err) {
+console.log(err);
+}
+else {
+console.log("\nFile Contents of file after append:",
+fs.readFileSync("file2.txt", "utf8"));
+}
+});
+
