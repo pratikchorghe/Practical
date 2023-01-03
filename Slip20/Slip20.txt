@@ -1,0 +1,84 @@
+Q1>Write a Java Program to implement I/O Decorator for converting uppercase letters to
+lower case letters?
+=>
+import java.io.*; 
+import java.util.*; 
+ class LowerCaseInputStream extends FilterInputStream 
+ { 
+ public LowerCaseInputStream(InputStream in) { 
+ super(in); 
+ } 
+ public int read() throws IOException { 
+ int c = super.read(); 
+ return (c == -1 ? c : Character.toLowerCase((char)c)); 
+ } 
+ public int read(byte[] b, int offset, int len) throws IOException { 
+ int result = super.read(b, offset, len); 
+ for (int i = offset; i < offset+result; i++) { 
+ b[i] = (byte)Character.toLowerCase((char)b[i]); 
+ } 
+ return result; 
+ } 
+} 
+
+public class Main { 
+ public static void main(String[] args) throws IOException { 
+ int c; 
+ try { 
+ InputStream in = 
+ new LowerCaseInputStream( 
+ new BufferedInputStream( 
+ new FileInputStream("test.txt"))); 
+ while((c = in.read()) >= 0) { 
+ System.out.print((char)c); 
+ } 
+ in.close(); 
+ } catch (IOException e) { 
+ e.printStackTrace(); 
+ } 
+ } 
+} 
+
+Q2>Write a python program to implement Decision Tree whether or not to play Tennis?
+=>
+import pandas as pd
+import numpy as np
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.preprocessing import LabelEncoder
+
+data=pd.read_csv("tennis.csv")
+print(data)
+
+le=LabelEncoder()
+data["Outlook"]=le.fit_transform(data["Outlook"])
+data["Temprature"]=le.fit_transform(data["Temprature"])
+data["Humidity"]=le.fit_transform(data["Humidity"])
+data["Wind"]=le.fit_transform(data["Wind"])
+data["Play_Tennis"]=le.fit_transform(data["Play_Tennis"])
+print(data)
+
+x=data.iloc[:,1:5].values
+y=data["Play_Tennis"]
+print(x)
+print(y)
+
+from sklearn.model_selection import train_test_split
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.4)
+
+dc=DecisionTreeClassifier(criterion="entropy")
+dc.fit(xtrain,ytrain)
+ypred=dc.predict(xtest)
+
+from sklearn.metrics import confusion_matrix
+cm=confusion_matrix(ytest,ypred)
+print(cm)
+
+from sklearn.tree import export_graphviz
+export_graphviz(dc,out_file="abc.dat")
+
+from sklearn.metrics import accuracy_score
+print("accuracy:",accuracy_score(ytest,ypred))
+
+Q3>Develop a basic poll application (app).It should consist of two parts:
+a) A public site in which user can pick their favourite programming language and vote.
+b) An admin site that lets you add, change and delete programming languages.
