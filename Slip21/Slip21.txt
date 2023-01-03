@@ -1,0 +1,213 @@
+Q1>Write a Java Program to implement command pattern to test Remote Control?
+=>
+Command.java
+interface Command{
+public void execute();
+}
+
+Light.java
+public class Light {
+        public void on()
+        {
+            System.out.println("Light is on");
+        }
+        public void off()
+        {
+            System.out.println("Light is off");
+        }
+    }
+    class LightOnCommand implements Command
+    {
+        Light light;
+     
+        // The constructor is passed the light it
+        // is going to control.
+        public LightOnCommand(Light light)
+        {
+           this.light = light;
+        }
+        public void execute()
+        {
+           light.on();
+        }    
+}
+
+LightOffCommand.java
+public class LightOffCommand implements Command
+{
+    Light light;
+    public LightOffCommand(Light light)
+    {
+        this.light = light;
+    }
+    public void execute()
+    {
+         light.off();
+    }
+}
+
+LightOnCommand.java
+public class LightOnCommand implements Command
+{
+    Light light;
+ 
+    // The constructor is passed the light it
+    // is going to control.
+    public LightOnCommand(Light light)
+    {
+       this.light = light;
+    }
+    public void execute()
+    {
+       light.on();
+    }
+}
+
+Stereo.java
+public class Stereo {
+    public void on()
+    {
+        System.out.println("Stereo is on");
+    }
+    public void off()
+    {
+        System.out.println("Stereo is off");
+    }
+    public void setCD()
+    {
+        System.out.println("Stereo is set " +
+                           "for CD input");
+    }
+    public void setDVD()
+    {
+        System.out.println("Stereo is set"+
+                         " for DVD input");
+    }
+    public void setRadio()
+    {
+        System.out.println("Stereo is set" +
+                           " for Radio");
+    }
+    public void setVolume(int volume)
+    {
+       // code to set the volume
+       System.out.println("Stereo volume set"
+                          + " to " + volume);
+    }
+}
+
+StereoOffCommand.java
+public class StereoOffCommand implements Command
+{
+    Stereo stereo;
+    public StereoOffCommand(Stereo stereo)
+    {
+        this.stereo = stereo;
+    }
+    public void execute()
+    {
+       stereo.off();
+    }
+}
+
+StereoOnWithCDCommand.java
+public class StereoOnWithCDCommand implements Command
+{
+     Stereo stereo;
+     public StereoOnWithCDCommand(Stereo stereo)
+     {
+         this.stereo = stereo;
+     }
+     public void execute()
+     {
+         stereo.on();
+         stereo.setCD();
+         stereo.setVolume(11);
+     }
+}
+
+SimpleRemoteControl.java
+public class SimpleRemoteControl
+{
+    Command slot;  // only one button
+ 
+    public SimpleRemoteControl()
+    {
+    }
+ 
+    public void setCommand(Command command)
+    {
+        // set the command the remote will
+        // execute
+        slot = command;
+    }
+ 
+    public void buttonWasPressed()
+    {
+        slot.execute();
+    }
+}
+
+RemoteControlTest.java
+public class RemoteControlTest
+{
+    public static void main(String[] args)
+    {
+        SimpleRemoteControl remote =
+                  new SimpleRemoteControl();
+        Light light = new Light();
+        Stereo stereo = new Stereo();
+ 
+        // we can change command dynamically
+        remote.setCommand(new
+                    LightOnCommand(light));
+        remote.buttonWasPressed();
+        remote.setCommand(new
+                StereoOnWithCDCommand(stereo));
+        remote.buttonWasPressed();
+        remote.setCommand(new
+                   StereoOffCommand(stereo));
+        remote.buttonWasPressed();
+     }
+  }
+
+OUTPUT:
+Light is on
+Stereo is on
+Stereo is set for CD input
+Stereo volume set to 11
+Stereo is off 
+
+Q2>Write a python program to implement Linear SVM?
+=>
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data=pd.read_csv("user_data1.csv")
+x=data.iloc[:,2:3].values
+y=data.iloc[:,3].values
+print(x)
+print(y)
+
+from sklearn.preprocessing import StandardScaler
+sc_x=StandardScaler()
+x=sc_x.fit_transform(x)
+
+
+from sklearn.svm import SVR
+reg=SVR()
+reg.fit(x,y)
+
+y_pred=reg.predict(np.array([[35]]))
+print(y_pred)
+
+x_grid=np.arange(min(x),max(x),0.01)
+x_grid=x_grid.reshape(len(x_grid),1)
+
+plt.scatter(x,y,c="red")
+plt.plot(x_grid,reg.predict(x_grid),c="green")
+plt.show()
+
+Q3>Design a Django application: A public site in which user can pick their favourite
+programming language and vote. 
