@@ -1,0 +1,148 @@
+Q1>Write a Java Program to implement Observer Design Pattern for number conversion.
+Accept a number in Decimal form and represent it in Hexadecimal, Octal and Binary.
+Change the Number and it reflects in other forms also?
+=>
+import java.util.ArrayList; 
+import java.util.List; 
+class Subject 
+{ 
+ private List<Observer>observers=new ArrayList<Observer>(); 
+ private int state; 
+ public int getState() 
+ { 
+ return state; 
+ } 
+ public void setState(int s) 
+ { 
+ this.state=s; 
+ notifyAllObservers(); 
+ } 
+ 
+ public void attach (Observer o1) 
+ { 
+ observers.add(o1); 
+ } 
+ public void notifyAllObservers() 
+ { 
+ for(Observer o1: observers) 
+ { 
+ o1.update(); 
+ } 
+ } 
+} 
+abstract class Observer 
+{ 
+protected Subject s1; 
+public abstract void update(); 
+} 
+class BinaryObserver extends Observer 
+ { 
+ public BinaryObserver(Subject s) 
+ { 
+ this.s1=s; 
+ this.s1.attach(this); 
+ } 
+ public void update() 
+ { 
+ System.out.println("Binary String:" +Integer.toBinaryString(s1.getState())); 
+ } 
+} 
+class OctalObserver extends Observer 
+ { 
+ public OctalObserver(Subject s) 
+ { 
+ this.s1=s; 
+ this.s1.attach(this); 
+ } 
+ public void update() 
+ { 
+ System.out.println("Octal String:" +Integer.toOctalString(s1.getState())); 
+ } 
+} 
+
+class HexaObserver extends Observer 
+ { 
+ public HexaObserver(Subject s) 
+ { 
+ this.s1=s; 
+ this.s1.attach(this); 
+ } 
+ public void update() 
+ { 
+ System.out.println("Heaxdeciamal String:" +Integer.toHexString(s1.getState())); 
+ } 
+}
+
+public class Main 
+{ 
+ public static void main(String [] args) 
+ { 
+ Subject s1=new Subject(); 
+ new BinaryObserver(s1); 
+ new OctalObserver(s1); 
+ new HexaObserver(s1); 
+ System.out.println("First state Change:15"); 
+ s1.setState(15); 
+ System.out.println("Second state Change:10"); 
+ s1.setState(10); 
+ } 
+}
+
+Q2>Write a python program to Implement Simple Linear Regression for predicting house
+price?
+=>
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error
+
+data=pd.read_csv("house.csv")
+print(data)
+
+x=data[["sqft_living"]]
+y=data.price
+
+print(x)
+print(y)
+
+plt.scatter(x,y)
+plt.xlabel("sqft_living")
+plt.ylabel("price")
+plt.show()
+
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.2)
+print(xtrain)
+print(xtest)
+print(ytrain)
+print(ytest)
+
+lr=LinearRegression()
+lr.fit(xtrain,ytrain)
+
+print(lr.intercept_)
+print(lr.coef_)
+
+print(lr.predict([[1000]]))
+
+
+ypred=lr.predict(xtest)
+cm=mean_absolute_error(ytest,ypred)
+print(cm)
+
+Q3>Create a js file named main.js for event-driven application. There should be a main loop
+that listens for events, and then triggers a callback function when one of those
+events is detected?
+=>
+var events=require('events');
+var myeventEmitter=new events.EventEmitter();
+myeventEmitter.on('myevent',function Listener1(){
+console.log('first event listener');
+});
+myeventEmitter.on('myevent',function Listener2(...args){
+console.log('listener2 executed.having parameters
+${parameters}');
+});
+console.log(myeventEmitter.listeners('myevent'));
+myeventEmitter.emit('myevent',10,20);
