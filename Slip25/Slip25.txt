@@ -1,0 +1,97 @@
+Q1>Write a Java Program to implement Singleton pattern for multithreading
+=>
+Singleton.java
+public class Singleton{
+	private static Singleton uniqueInstance;
+	
+	private Singleton() {
+        
+		System.out.println("Instance has been Created");
+	}
+	
+	public static Singleton getInstance() {
+		if(uniqueInstance== null) {
+			synchronized (Singleton.class) {
+				
+				if(uniqueInstance == null) {
+					uniqueInstance=new Singleton();
+				}
+			}
+			
+		}
+		return uniqueInstance;
+	}
+	
+	public static void main(String[] args) {
+		
+		Thread t1= new Thread(new Runnable() {
+			public void run() {
+				Singleton obj=Singleton.getInstance();
+			}
+		});
+		
+		Thread t2=new Thread(new Runnable() {
+			public void run() {
+				Singleton obj=Singleton.getInstance();
+			}
+		});
+		
+		t1.start();
+		t2.start();
+	}
+}
+OUTPUT:
+Instance has been Created
+
+Q2>Write a python program to Implement Simple Linear Regression for predicting house
+price
+=>
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error
+
+data=pd.read_csv("house.csv")
+print(data)
+
+x=data[["sqft_living"]]
+y=data.price
+
+print(x)
+print(y)
+
+plt.scatter(x,y)
+plt.xlabel("sqft_living")
+plt.ylabel("price")
+plt.show()
+
+xtrain,xtest,ytrain,ytest=train_test_split(x,y,test_size=0.2)
+print(xtrain)
+print(xtest)
+print(ytrain)
+print(ytest)
+
+lr=LinearRegression()
+lr.fit(xtrain,ytrain)
+
+print(lr.intercept_)
+print(lr.coef_)
+
+print(lr.predict([[1000]]))
+
+
+ypred=lr.predict(xtest)
+cm=mean_absolute_error(ytest,ypred)
+print(cm)
+
+Q3>Create a Simple Web Server using node js.?
+=>
+var http = require('http'); // 1 - Import Node.js core module
+var server = http.createServer(function (req, res) { // 2 -
+creating server
+//handle incomming requests here..
+});
+server.listen(5001); //3 - listen for any incoming requests
+console.log('Node.js web server at port 5000 is running..')
