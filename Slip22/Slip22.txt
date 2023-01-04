@@ -1,0 +1,26 @@
+Q1>Design simple HR Application using Spring Framework?
+=>
+https://github.com/sefauncu/spring-mvc-hr-application/blob/master/SimpleHRApplication/.project
+
+Q2>Write a Python program to prepare Scatter Plot for Iris Dataset
+=>
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data=pd.read_csv("iris.csv")
+print(data)
+
+x=data["SepalLengthCm"]
+y=data["SepalWidthCm"]
+print(x)
+print(y)
+
+plt.scatter(x,y,c="red")
+plt.title("IRIS CSV")
+plt.xlabel("SepalLengthCm")
+plt.ylabel("SepalWidthCm")
+plt.show()
+
+Q3>Design a Django application: An admin site that lets you add, change and delete
+programming languages.
