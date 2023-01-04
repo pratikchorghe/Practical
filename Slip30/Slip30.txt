@@ -1,0 +1,272 @@
+Q1>Write a Java Program to implement Factory method for Pizza Store with createPizza(),
+orederPizza(), prepare(), Bake(), cut(), box(). Use this to create variety of pizza’s
+like NyStyleCheesePizza, ChicagoStyleCheesePizza etc
+=>
+
+PizzaStore.java
+public abstract class PizzaStore{
+abstract Pizza createPizza(String item);
+public Pizza orderPizza(String type){
+    Pizza pizza=createPizza(type);
+System.out.println("---Making a"+pizza.getName()+"---");
+pizza.prepare();
+pizza.bake();
+pizza.cut();
+pizza.box();
+return pizza;
+}
+}
+
+ChicagoPizzaStore.java
+public class ChicagoPizzaStore extends PizzaStore {
+
+    Pizza createPizza(String item) {
+            if (item.equals("cheese")) {
+                    return new ChicagoStyleCheesePizza();
+            } else if (item.equals("veggie")) {
+                    return new ChicagoStyleVeggiePizza();
+            } else if (item.equals("clam")) {
+                    return new ChicagoStyleClamPizza();
+            } else if (item.equals("pepperoni")) {
+                    return new ChicagoStylePepperoniPizza();
+            } else return null;
+    }
+}
+
+NYPizzaStore.java
+public class NYPizzaStore extends PizzaStore{
+Pizza createPizza(String item){
+if(item.equals("cheese")){
+return new; 
+NYStyleCheesePizza();
+}else if(item.equals("veggie")){
+return new;
+NYStyleCheesePizza();
+}else if(item.equals("clam")){
+return new;
+NYStyleCheesePizza();
+}else if(item.equals("pepperoni")){
+return new;
+NYStyleCheesePizza();
+}else return null;
+}
+}
+
+
+Pizza.java
+import java.util.ArrayList;
+
+public abstract class Pizza {
+    String name;
+    String dough;
+    String sauce;
+    ArrayList<String> toppings = new ArrayList<String>();
+
+    void prepare() {
+        System.out.println("Prepare " + name);
+        System.out.println("Tossing dough...");
+        System.out.println("Adding sauce...");
+        System.out.println("Adding toppings: ");
+        for (String topping : toppings) {
+            System.out.println("   " + topping);
+        }
+    }
+
+    void bake() {
+        System.out.println("Bake for 25 minutes at 350");
+    }
+
+    void cut() {
+        System.out.println("Cut the pizza into diagonal slices");
+    }
+
+    void box() {
+        System.out.println("Place pizza in official PizzaStore box");
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String toString() {
+        StringBuffer display = new StringBuffer();
+        display.append("---- " + name + " ----\n");
+        display.append(dough + "\n");
+        display.append(sauce + "\n");
+        for (String topping : toppings) {
+            display.append(topping + "\n");
+        }
+        return display.toString();
+    }
+}
+
+NYStyleCheesePizza.java
+public class NYStyleCheesePizza extends Pizza {
+
+    public NYStyleCheesePizza() {
+        name = "NY Style Sauce and Cheese Pizza";
+        dough = "Thin Crust Dough";
+        sauce = "Marinara Sauce";
+
+        toppings.add("Grated Reggiano Cheese");
+    }
+}
+
+NYStyleClamPizza.java
+public class NYStyleClamPizza extends Pizza {
+
+    public NYStyleClamPizza() {
+        name = "NY Style Clam Pizza";
+        dough = "Thin Crust Dough";
+        sauce = "Marinara Sauce";
+
+        toppings.add("Grated Reggiano Cheese");
+        toppings.add("Fresh Clams from Long Island Sound");
+    }
+}
+
+ChicagoStylePepperoniPizza.java
+public class ChicagoStylePepperoniPizza extends Pizza {
+    public ChicagoStylePepperoniPizza() {
+        name = "Chicago Style Pepperoni Pizza";
+        dough = "Extra Thick Crust Dough";
+        sauce = "Plum Tomato Sauce";
+
+        toppings.add("Shredded Mozzarella Cheese");
+        toppings.add("Black Olives");
+        toppings.add("Spinach");
+        toppings.add("Eggplant");
+        toppings.add("Sliced Pepperoni");
+    }
+
+    void cut() {
+        System.out.println("Cutting the pizza into square slices");
+    }
+}
+
+ChicagoStyleVeggiePizza.java
+public class ChicagoStyleVeggiePizza extends Pizza {
+    public ChicagoStyleVeggiePizza() {
+        name = "Chicago Deep Dish Veggie Pizza";
+        dough = "Extra Thick Crust Dough";
+        sauce = "Plum Tomato Sauce";
+
+        toppings.add("Shredded Mozzarella Cheese");
+        toppings.add("Black Olives");
+        toppings.add("Spinach");
+        toppings.add("Eggplant");
+    }
+
+    void cut() {
+        System.out.println("Cutting the pizza into square slices");
+    }
+}
+
+ChicagoStyleClamPizza.java
+public class ChicagoStyleClamPizza extends Pizza {
+    public ChicagoStyleClamPizza() {
+        name = "Chicago Deep Dish Veggie Pizza";
+        dough = "Extra Thick Crust Dough";
+        sauce = "Plum Tomato Sauce";
+
+        toppings.add("Shredded Mozzarella Cheese");
+        toppings.add("Black Olives");
+        toppings.add("Clams");
+        toppings.add("Jalapeons");
+    }
+
+    void cut() {
+        System.out.println("Cutting the pizza into square slices");
+    }
+}
+
+ChicagoStyleCheesePizza.java
+public class ChicagoStyleCheesePizza extends Pizza {
+    public ChicagoStyleCheesePizza() {
+        name = "Chicago Deep Dish Veggie Pizza";
+        dough = "Extra Thick Crust Dough";
+        sauce = "Plum Tomato Sauce";
+
+        toppings.add("Shredded Mozzarella Cheese");
+        toppings.add("Black Olives");
+        toppings.add("Mayo");
+        toppings.add("Cheddar");
+    }
+
+    void cut() {
+        System.out.println("Cutting the pizza into square slices");
+    }
+}
+
+PizzaTestDrive.java
+public class PizzaTestDrive {
+
+    public static void main(String[] args) {
+        PizzaStore nyStore = new NYPizzaStore();
+        PizzaStore chicagoStore = new ChicagoPizzaStore();
+
+        Pizza pizza = nyStore.orderPizza("cheese");
+        System.out.println("First order was a " + pizza.getName() + "\n");
+
+        pizza = nyStore.orderPizza("cheese");
+        System.out.println("Second order was a " + pizza.getName() + "\n");
+    }
+}
+
+OUTPUT:
+---Making a NY Style Sauce and Cheese Pizza---
+Prepare NY Style Sauce and Cheese Pizza
+Tossing dough...
+Adding sauce...
+Adding toppings:
+   Grated Reggiano Cheese
+Bake for 25 minutes at 350
+Cut the pizza into diagonal slices
+Place pizza in official PizzaStore box
+First order was a NY Style Sauce and Cheese Pizza
+
+---Making a NY Style Sauce and Cheese Pizza---
+Prepare NY Style Sauce and Cheese Pizza
+Tossing dough...
+Adding sauce...
+Adding toppings:
+   Grated Reggiano Cheese
+Bake for 25 minutes at 350
+Cut the pizza into diagonal slices
+Place pizza in official PizzaStore box
+Second order was a NY Style Sauce and Cheese Pizza
+
+Q2>Write a python program to implement Linear SVM
+=>
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data=pd.read_csv("user_data1.csv")
+x=data.iloc[:,2:3].values
+y=data.iloc[:,3].values
+print(x)
+print(y)
+
+from sklearn.preprocessing import StandardScaler
+sc_x=StandardScaler()
+x=sc_x.fit_transform(x)
+
+
+from sklearn.svm import SVR
+reg=SVR()
+reg.fit(x,y)
+
+y_pred=reg.predict(np.array([[35]]))
+print(y_pred)
+
+x_grid=np.arange(min(x),max(x),0.01)
+x_grid=x_grid.reshape(len(x_grid),1)
+
+plt.scatter(x,y,c="red")
+plt.plot(x_grid,reg.predict(x_grid),c="green")
+plt.show()
+
+Q3>Implement Login System using Django.
+=>
+https://ordinarycoders.com/blog/article/django-user-register-login-logout
