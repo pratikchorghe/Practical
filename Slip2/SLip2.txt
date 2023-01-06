@@ -100,3 +100,136 @@ alert(“Submitted Successfully”);
 </html>
 
 
+!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Registration</title>
+    <style type="text/css">
+      body {
+        font-family: calibri;
+      }
+      input[type="text"] {
+        width: 250px;
+      }
+      input[type="submit"],
+      input[type="reset"] {
+        width: 90px;
+        height: 30px;
+        position: relative;
+        left: 180px;
+      }
+      form {
+        text-align: center;
+        font-family: calibri;
+        font-size: 20px;
+        border: 3px solid black;
+        width: 600px;
+        margin: 20px auto;
+      }
+      td {
+        padding: 10px;
+      }
+      td:first-child {
+        text-align: right;
+        font-weight: bold;
+      }
+      td:last-child {
+        text-align: left;
+      }
+    </style>
+    <script>
+      function validate() {
+        var sal = document.reg_form.salary.value;
+        var dob = document.reg_form.bdate.value;
+        var doj = document.reg_form.jdate.value;
+        var formate =
+          /^(0?[1-9]|1[0-2])[\/](0?[1-9]|[1-2][0-9]|3[01])[\/]\d{4}$/;
+        if (dob == formate.test(dob)) {
+          alert("please enter valid date of birth", dob);
+          dob.focus();
+          return false;
+        }
+        if (doj == formate.test(doj)) {
+          alert("please enter valid date of joining", doj);
+          doj.focus();
+          return false;
+        }
+        if (!(sal >= 18000 && sal <= 50000 && sal != "")) {
+          alert("Please enter valid salary", sal);
+          sal.focus();
+          return false;
+        } else alert("Submit Successfully");
+      }
+    </script>
+  </head>
+  <body>
+    <hr />
+    <form method="" action="" name="reg_form" onsubmit="return validate()">
+      <h2>Employee Registration Form</h2>
+      <table>
+        <tr>
+          <td>
+            <label>Name</label>
+          </td>
+          <td>
+            <input type="text" name="ename" placeholder="Name" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Address:</label>
+          </td>
+          <td>
+            <input
+              type="textarea"
+              size="26px"
+              name="address"
+              placeholder="Address"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Contact:</label>
+          </td>
+          <td>
+            <input type="integer" name="mobile" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Birth Date:</label>
+          </td>
+          <td>
+            <input type="date" name="bdate" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Salary:</label>
+          </td>
+          <td>
+            <input type="number" name="salary" placeholder="" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Joining Date:</label>
+          </td>
+          <td>
+            <input type="date" name="jdate" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="submit" name="submit" value="Submit" />
+            <input type="reset" name="reset" value="Reset" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>
