@@ -144,20 +144,22 @@ print(data)
 Q3>Create a node.js file that Select all records from the "customers" table, and delete the
 specified record?
 =>
+
 var mysql = require('mysql');
+
 var con = mysql.createConnection({
-host: "localhost",
-user: "root",
-password: "sonal123",
-database: "employee"
+  host: "localhost",
+  user: "root",
+  password: "Password#123",
+  database: "mydb3"
 });
 con.connect(function(err) {
-if (err) throw err;
-var sql = "DELETE FROM emp WHERE name = 'dada'";
-con.query(sql, function (err, result) {
-if (err) throw err;
-console.log("Number of records deleted: " +
-result.affectedRows);
-});
+  if (err) throw err;
+  
+  var sql = "DELETE FROM customers2 WHERE name = 'abc2'";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Records deleted: " + result.affectedRows);
+  });
 });
 
