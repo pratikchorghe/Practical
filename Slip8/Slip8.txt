@@ -341,50 +341,40 @@ print("accuracy:",accuracy_score(ytest,ypred))
 
 Q3>Create a Node.js file that demonstrates create database and table in MySQL?
 =>
-var mysql=require("mysql");
-var con=mysql.createConnection({
-host:"localhost",user:"root",password:"password"});
-con.connect(function(err)
-{
-if (err) throw err;
-console.log("connected");
-con.query("create database mydb",function(err)
-{
-if(err) throw err;
-else{
-console.log("created database");
-con.query("use mydb",function(err){
-})
-}
-})
-})
-con.query("create table student(rno int primary key,name text)",
-function(err){
-if(err)
-console.log("create table failed");
-else
-{
-con.query("insert into student
-values(1,'sonal'),(2,'samarth'),(3,'prasad')",
-function(err)
-{
-if(err)
-console.log("insert values
-failed!");
-else{
-console.log("insert values
-successfully!");
-con.query("select * from
-student",function(err,result){
-if(err) throw err;
-console.log(result);
+
+Database.JS
+
+var mysql = require("mysql");
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "Password#123",
 });
-}
-})
-}
-con.query("update student set
-name='lasane' where rno=1",function(err){
-if(err) throw err;
-console.log("updated successfully");
+con.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
+  con.query("CREATE DATABASE mydb3", function (err, result) {
+    if (err) throw err;
+    console.log("Database created");
+  });
 });
+
+
+Query.JS
+
+var mysql = require("mysql");
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "Password#123",
+  database: "mydb3",
+});
+con.connect(function (err) {
+  if (err) throw err;
+  console.log("Connected!");
+  var sql ="CREATE TABLE customers2(name VARCHAR(25), address VARCHAR(25))";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("Table created");
+  });
 });
