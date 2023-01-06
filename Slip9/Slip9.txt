@@ -37,26 +37,26 @@ plt.show()
 Q3>Create a node.js file that Select all records from the "customers" table, and display the
 result object on console.
 =>
-var mysql=require('mysql'); 
- var
- con=mysql.createConnection({    
- host:"localhost",     
- user:"root",    
- password:"satara@123",    
- database:"mydb" 
-});  
-con.connect(function(err){     if (err) throw err;     
-console.log("Connected!!!");     var sql="INSERT INTO 
-Student (name,address) Values ?";     var values=[ 
-        ['Pritam','Highway 71'], 
-        ['Sneha','Lowstreet 4'], 
-        ['Sid','Apple st 652'], 
-        ['Sam','Valley 345'], 
-        ['Michael','Green Greass 1'], 
-        ['Griss','One way 98'], 
-        ['Richard','Sky st 331'] 
-      ];          con.query(sql,[values],function(err,result){         if (err) throw err; 
-        console.log("Number of records inserted:" + result.affectedRows); 
-    }); 
-}); 
-    
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: 'localhost',
+  user: "root",
+  password: "Password#123",
+  database:'mydb3'
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
+con.query('SELECT * FROM customers2', (err,rows) => {
+    if(err) throw err;
+  
+    console.log('Data received from Db:');
+    console.log(rows);
+  });
+ 
+  
