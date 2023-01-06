@@ -201,3 +201,4 @@ Q3> Create an HTML form that contain the Student Registration details and write 
     </table>
   </form>
 </body>
+</html>
