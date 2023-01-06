@@ -242,36 +242,91 @@ using Regular Expression?
 =>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="initial-scale=1.0">
-<title>my login form</title>
-<script>
-function f()
-{
-var lid=document.getElementById("lid").value;
-var pwd=document.getElementById("pwd").value;
-if(!(/([a-zA-Z0-9])+@([a-zA_Z])+.([a-zA_Z])/.test(lid))){
-alert("plz enter valid id");
-return false;
-}
-var l=password.length;
-if(password==null ||l<8)
-{
-alert("invalid password");
-return false;
-}
-alert("successfully login...");
-}
-</script>
-</head>
-<body>
-loginid:<input type="text" name="login id" id="lid"><br>
-password:<input type="password" name="password" id="pwd"><br>
-<input type="button" value="submit" onclick="f()">
-</body>
-<script>
-console.log("hello world");
-</script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>login</title>
+    <style type="text/css">
+      body {
+        font-family: calibri;
+      }
+      input[type="text"] {
+        width: 250px;
+      }
+      input[type="submit"],
+      input[type="reset"] {
+        width: 80px;
+        height: 30px;
+        position: relative;
+        left: 180px;
+      }
+      form {
+        text-align: center;
+        font-family: calibri;
+        font-size: 20px;
+        border: 3px solid black;
+        width: 600px;
+        margin: 20px auto;
+      }
+      td {
+        padding: 10px;
+      }
+      td:first-child {
+        text-align: right;
+        font-weight: bold;
+      }
+      td:last-child {
+        text-align: left;
+      }
+    </style>
+    <script>
+      function validate() {
+        var eid = document.reg_form.email.value;
+        var password = document.reg_form.password.value;
+        var formate = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/g;
+        if (!eid == formate.test(eid)) {
+          alert("please enter valid email");
+          eid.focus();
+          return false;
+        }
+        if (password == "") {
+          alert("Please enter your password");
+          password.focus();
+          return false;
+        } else alert("Login Successfully");
+      }
+    </script>
+  </head>
+  <body>
+    <hr />
+    <form method="" action="" name="reg_form" onsubmit="return validate()">
+      <h2>login</h2>
+      <table>
+        <tr>
+          <td>
+            <label>Email Id</label>
+          </td>
+          <td>
+            <input type="text" name="email" />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label>Password</label>
+          </td>
+          <td>
+            <input type="password" name="password" />
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <input type="submit" name="submit" value="Login" />
+            <input type="reset" name="reset" value="Reset" />
+          </td>
+        </tr>
+      </table>
+    </form>
+  </body>
 </html>
